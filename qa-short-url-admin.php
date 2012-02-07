@@ -24,26 +24,37 @@ class qa_short_url_admin{
 			$ok = qa_lang('admin/options_reset');
 		}
 
-			$fields = array();
+		$fields = array();
+		if($_SERVER['REMOTE_ADDR'] == '127.0.0.1'){
+			$fields[] = array(
+				'label' => 'You cannot enable when in localhost',
+				'tags' => 'NAME="short_url_content_on"',
+				'value' => qa_opt('short_url_content_on'),
+				'type' => 'checkbox',
+				'disabled' => 'disabled',
+				);
+		}else{
 			$fields[] = array(
 				'label' => 'Enable Short Url',
 				'tags' => 'NAME="short_url_content_on"',
 				'value' => qa_opt('short_url_content_on'),
 				'type' => 'checkbox',
-				);	
-			$fields[] = array(
-				'label' => 'Your Bitly username',
-				'tags' => 'NAME="short_url_bitly_username"',
-				'value' => qa_opt('short_url_bitly_username'),
-				'type' => 'string',
 				);
-				$fields[] = array(
-					'label' => 'Your Bitly api key',
-					'tags' => 'NAME="short_url_bitly_api_key"',
-					'value' => qa_opt('short_url_bitly_api_key'),
-					'type' => 'string',
-					);
-		
+		}
+
+		$fields[] = array(
+			'label' => 'Your Bitly username',
+			'tags' => 'NAME="short_url_bitly_username"',
+			'value' => qa_opt('short_url_bitly_username'),
+			'type' => 'string',
+			);
+		$fields[] = array(
+			'label' => 'Your Bitly api key',
+			'tags' => 'NAME="short_url_bitly_api_key"',
+			'value' => qa_opt('short_url_bitly_api_key'),
+			'type' => 'string',
+			);
+
 		return array(
 			'ok' => ($ok && !isset($error)) ? $ok : null,
 
