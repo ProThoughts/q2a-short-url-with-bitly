@@ -25,6 +25,7 @@ class qa_short_url_admin{
 		}
 
 		$fields = array();
+		$ready=strlen(qa_opt('short_url_bitly_username')) && strlen(qa_opt('short_url_bitly_api_key'));
 		if($_SERVER['REMOTE_ADDR'] == '127.0.0.1'){
 			$fields[] = array(
 				'label' => 'You cannot enable when in localhost',
@@ -47,12 +48,14 @@ class qa_short_url_admin{
 			'tags' => 'NAME="short_url_bitly_username"',
 			'value' => qa_opt('short_url_bitly_username'),
 			'type' => 'string',
+			
 			);
 		$fields[] = array(
 			'label' => 'Your Bitly api key',
 			'tags' => 'NAME="short_url_bitly_api_key"',
 			'value' => qa_opt('short_url_bitly_api_key'),
 			'type' => 'string',
+			'error' => $ready ? null : 'You can find your api key <a href="https://bitly.com/a/your_api_key">here</a>'
 			);
 
 		return array(
