@@ -13,15 +13,15 @@ class qa_html_theme_layer extends qa_html_theme_base {
 		{
 			$login = qa_opt('short_url_bitly_username');
 			$api_key = qa_opt('short_url_bitly_api_key');
-			$url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-			$api_url =  "http://api.bit.ly/v3/shorten?login=".$login."&apiKey=".$api_key."&uri=".$url."&format=txt";
+			$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$api_url =  "http://api.bit.ly/v3/shorten?login=".$login."&apiKey=".$api_key."&uri=".urlencode($url)."&format=txt";
 			if(qa_opt($url))
 				$short_url = qa_opt($url);
 			else{
 				$short_url = file_get_contents($api_url);
 				qa_opt($url, $short_url);
 			}
-				$this->output($short_url);
+				$this->output('<input value="'.$short_url.'">');
 		}
 	}
 }
